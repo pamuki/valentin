@@ -2,66 +2,98 @@ let heartImg;
 let yesButton;
 let noButton;
 let showHeart = false;
-let heartOpacity = 0; // For fade-in effect
-let textRotation = 0; // For rotating text
-let fadeInSpeed = 3; // Controls how fast the heart fades in
+let heartOpacity = 0;
+let textRotation = 0;
+let fadeInSpeed = 3;
+
+let font1;
+let font2;
+let font3;
+
+
+// Add these as global variables
+let yesButtonPosX;
+let noButtonPosX;
+let buttonPosY;
 
 function preload() {
   heartImg = loadImage('heart.png');
+
+  font1 = loadFont('fonts/Pinko-j99pl.ttf');
+  font2 = loadFont('fonts/StylishCalligraphyDemo-XPZZ.ttf')
+  font3 = loadFont('fonts/Xiomara-wWLw.ttf')
 }
 
 function setup() {
+  textFont(font1);
+
   let canvasWidth = min(windowWidth, windowHeight * (9/16));
   let canvasHeight = canvasWidth * (16/9);
   
   createCanvas(canvasWidth, canvasHeight);
   background('#ff93d2');
+
+  // Calculate button positions relative to canvas width, not window width
+  yesButtonPosX = width/2 - 100; // Increased spacing between buttons
+  noButtonPosX = width/2 + 20;   // Adjusted for better centering
+  buttonPosY = height/2 + 100;   // Vertical position relative to canvas height
   
   yesButton = createButton('Yes');
   yesButton.class('game-button');
-  yesButton.position(windowWidth/2 - 60, windowHeight/2);
+  yesButton.position(yesButtonPosX, buttonPosY);
   yesButton.mousePressed(showHeartImage);
   
   noButton = createButton('No');
   noButton.class('game-button');
-  noButton.position(windowWidth/2 + 20, windowHeight/2);
+  noButton.position(noButtonPosX, buttonPosY);
   noButton.mousePressed(moveNoButton);
   
   // Set text properties
   textAlign(CENTER, CENTER);
-  textSize(width * 0.06); // Responsive text size
+  textSize(width * 0.06);
 }
 
 function draw() {
   background('#ff93d2');
   
+  if (!showHeart) {
+    // Draw prompt text above buttons
+    fill(255);
+    textSize(width * 0.08);
+    textFont(font3);
+    text("Will you come to ", width/2, height/2 - 220);
+    textFont(font1);
+    text("tüdőszűrés", width/2, height/2 - 140);
+    textFont(font3);
+    text("with me?", width/2, height/2 - 80);
+    textFont('Courier New');
+    text("👉👈", width/2, height/2 - 10);
+    textSize(width * 0.06);
+    textFont(font3);
+  }
+  
   if (showHeart) {
-    // Hide buttons when heart is shown
     yesButton.hide();
     noButton.hide();
     
-    // Fade in the heart
     if (heartOpacity < 255) {
       heartOpacity += fadeInSpeed;
     }
     
-    // Draw heart with current opacity
     imageMode(CENTER);
     let heartSize = width * 0.4;
-    tint(255, heartOpacity); // Apply opacity to the image
+    tint(255, heartOpacity);
     image(heartImg, width/2, height/2, heartSize, heartSize);
-    noTint(); // Reset tint for other elements
+    noTint();
     
-    // Rotate and draw text under the heart
-    push(); // Save current transformation state
-    translate(width/2, height/2 + heartSize/2 + 40); // Position below heart
+    push();
+    translate(width/2, height/2 + heartSize/2 + 40);
     rotate(textRotation);
-    fill(255, 20, 147, heartOpacity); // Pink color with same opacity as heart
+    fill(255, 20, 147, heartOpacity);
     text("I love you", 0, 0);
-    pop(); // Restore transformation state
+    pop();
     
-    // Update text rotation
-    textRotation += 0.02; // Speed of rotation
+    textRotation += 0.02;
   }
 }
 
@@ -70,20 +102,23 @@ function windowResized() {
   let canvasHeight = canvasWidth * (16/9);
   resizeCanvas(canvasWidth, canvasHeight);
   
-  // Update text size on resize
-  textSize(width * 0.06);
+  // Recalculate button positions on resize
+  yesButtonPosX = width/2 - 100;
+  noButtonPosX = width/2 + 20;
+  buttonPosY = height/2 + 100;
   
-  // Update button positions if they're still visible
   if (!showHeart) {
-    yesButton.position(canvasWidth/2 - 60, canvasHeight/2);
-    noButton.position(canvasWidth/2 + 20, canvasHeight/2);
+    yesButton.position(yesButtonPosX, buttonPosY);
+    noButton.position(noButtonPosX, buttonPosY);
   }
+  
+  textSize(width * 0.06);
 }
 
 function showHeartImage() {
   showHeart = true;
-  heartOpacity = 0; // Reset opacity for fade-in effect
-  textRotation = 0; // Reset text rotation
+  heartOpacity = 0;
+  textRotation = 0;
 }
 
 function moveNoButton() {
