@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Interactive Hearts</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        touch-action: none; /* Prevents unwanted scrolling/zooming on mobile */
+      }
+      
+      canvas {
+        display: block;
+        margin: auto;
+      }
+      
+      .game-button {
+        padding: 12px 24px;
+        font-size: 18px;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: white;
+        transition: background-color 0.3s;
+        touch-action: manipulation; /* Improves touch response */
+      }
+      
+      .game-button:hover {
+        background-color: #45a049;
+      }
+    </style>
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+    <script src="sketch.js"></script>
+  </body>
+</html>
