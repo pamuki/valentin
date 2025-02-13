@@ -61,14 +61,14 @@ function draw() {
     push();
     translate(heart.x, heart.y);
     rotate(heart.rotation);
-    tint(255, heart.opacity);
-    imageMode(CENTER);
-    image(heartImg, 0, 0, heart.size * 1.0769, heart.size);
-    noTint();
+    // Use a system font that supports emojis (like sans-serif)
+    textFont("sans-serif");
+    textSize(heart.size);
+    // Draw the heart emoji centered at (0,0)
+    text("❤️", 0, 0);
     pop();
-    
-  
   }
+  
   
   if (!showHeart) {
     fill(255);
