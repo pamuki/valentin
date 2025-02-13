@@ -7,6 +7,8 @@ let textRotation = 0;
 let fadeInSpeed = 3;
 let firstClickDone = false; // Add flag for first click
 
+let emojis = ["💕","❤️","🥰","😘","😍","💋","🫦","👩🏻‍❤️‍💋‍👨🏼","🎀","💖","💞","❤️‍🔥","💝","💘"]
+
 let font1;
 let font2;
 let font3;
@@ -65,7 +67,8 @@ function draw() {
     textFont("sans-serif");
     textSize(heart.size);
     // Draw the heart emoji centered at (0,0)
-    text("❤️", 0, 0);
+    text(heart.emoji, 0, 0);
+    
     pop();
   }
   
@@ -120,10 +123,10 @@ function mousePressed() {
       // Second click and beyond
       let newHeart = {
         x: random(width * 0.1, width * 0.9),
-        y: random(height * 0.1, height * 0.9),
+        y: random(height *0.01, height),
         size: random(width * 0.1, width * 0.2),
         rotation: random(TWO_PI),
-        opacity: 255
+        emoji: random(emojis)
       };
       randomHearts.push(newHeart);
     }
