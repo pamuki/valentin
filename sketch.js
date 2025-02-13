@@ -85,10 +85,11 @@ function draw() {
     imageMode(CENTER);
     let heartSize = width * 0.4;
     tint(255, heartOpacity);
-    image(heartImg, width/2, height/2, heartSize, heartSize);
+    image(heartImg, width/2, height/2- 100, heartSize*1.0769, heartSize);
     noTint();
     
     push();
+    textSize(width * 0.09);
     translate(width/2, height/2 + heartSize/2 + 40);
     rotate(textRotation);
     fill(255, 20, 147, heartOpacity);
@@ -114,7 +115,7 @@ function windowResized() {
     noButton.position(noButtonPosX, buttonPosY);
   }
   
-  textSize(width * 0.06);
+  
 }
 
 function showHeartImage() {
