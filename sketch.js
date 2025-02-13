@@ -86,6 +86,7 @@ function draw() {
     text("👉👈", width/2, height/2 - 10);
     textSize(width * 0.06);
     textFont(font3);
+    text("(will you be my valentine?)", width/2, height/2 + 250);
   }
   
   if (showHeart) {
