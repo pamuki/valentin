@@ -34,9 +34,9 @@ function setup() {
   background('#ff93d2');
 
   // Calculate button positions relative to canvas width, not window width
-  yesButtonPosX = width/2 - 100; // Increased spacing between buttons
-  noButtonPosX = width/2 + 20;   // Adjusted for better centering
-  buttonPosY = height/2 + 100;   // Vertical position relative to canvas height
+  yesButtonPosX = windowWidth/2 - 100; // Increased spacing between buttons
+  noButtonPosX = windowWidth/2 + 20;   // Adjusted for better centering
+  buttonPosY = windowHeight/2 + 100;   // Vertical position relative to canvas height
   
   yesButton = createButton('Yes');
   yesButton.class('game-button');
@@ -68,6 +68,8 @@ function draw() {
     text("with me?", width/2, height/2 - 80);
     textFont('Courier New');
     text("👉👈", width/2, height/2 - 10);
+    
+    
     textSize(width * 0.06);
     textFont(font3);
   }
@@ -103,9 +105,9 @@ function windowResized() {
   resizeCanvas(canvasWidth, canvasHeight);
   
   // Recalculate button positions on resize
-  yesButtonPosX = width/2 - 100;
-  noButtonPosX = width/2 + 20;
-  buttonPosY = height/2 + 100;
+  yesButtonPosX = windowWidth/2 - 100;
+  noButtonPosX = windowWidth/2 + 20;
+  buttonPosY = windowHeight/2 + 100;
   
   if (!showHeart) {
     yesButton.position(yesButtonPosX, buttonPosY);
