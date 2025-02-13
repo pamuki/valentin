@@ -67,10 +67,7 @@ function draw() {
     noTint();
     pop();
     
-    // Fade in effect for random hearts
-    if (heart.opacity < 255) {
-      heart.opacity += fadeInSpeed;
-    }
+  
   }
   
   if (!showHeart) {
@@ -126,7 +123,7 @@ function mousePressed() {
         y: random(height * 0.1, height * 0.9),
         size: random(width * 0.1, width * 0.2),
         rotation: random(TWO_PI),
-        opacity: 0
+        opacity: 255
       };
       randomHearts.push(newHeart);
     }
