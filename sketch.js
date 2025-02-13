@@ -103,9 +103,11 @@ function draw() {
     noTint();
     
     push();
-    textSize(width * 0.09);
+    textSize(width * 0.13);
     translate(width/2, height/2 + heartSize/2 + 40);
     rotate(textRotation);
+    stroke(0, 0, 0);
+    strokeWeight(3);
     fill(255, 20, 147, heartOpacity);
     text("I love you", 0, 0);
     pop();
@@ -122,8 +124,8 @@ function mousePressed() {
     } else {
       // Second click and beyond
       let newHeart = {
-        x: random(width * 0.1, width * 0.9),
-        y: random(height *0.01, height),
+        x: random(0, width),
+        y: random(0, height),
         size: random(width * 0.1, width * 0.2),
         rotation: random(TWO_PI),
         emoji: random(emojis)
