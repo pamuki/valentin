@@ -5,11 +5,14 @@ let showHeart = false;
 let heartOpacity = 0;
 let textRotation = 0;
 let fadeInSpeed = 3;
+let firstClickDone = false; // Add flag for first click
 
 let font1;
 let font2;
 let font3;
 
+// Array to store random hearts
+let randomHearts = [];
 
 // Add these as global variables
 let yesButtonPosX;
@@ -18,7 +21,6 @@ let buttonPosY;
 
 function preload() {
   heartImg = loadImage('heart.png');
-
   font1 = loadFont('fonts/Pinko-j99pl.ttf');
   font2 = loadFont('fonts/StylishCalligraphyDemo-XPZZ.ttf')
   font3 = loadFont('fonts/Xiomara-wWLw.ttf')
@@ -33,10 +35,9 @@ function setup() {
   createCanvas(canvasWidth, canvasHeight);
   background('#ff93d2');
 
-  // Calculate button positions relative to canvas width, not window width
-  yesButtonPosX = windowWidth/2 - 100; // Increased spacing between buttons
-  noButtonPosX = windowWidth/2 + 20;   // Adjusted for better centering
-  buttonPosY = windowHeight/2 + 100;   // Vertical position relative to canvas height
+  yesButtonPosX = windowWidth/2 - 100;
+  noButtonPosX = windowWidth/2 + 20;
+  buttonPosY = windowHeight/2 + 100;
   
   yesButton = createButton('Yes');
   yesButton.class('game-button');
@@ -48,7 +49,6 @@ function setup() {
   noButton.position(noButtonPosX, buttonPosY);
   noButton.mousePressed(moveNoButton);
   
-  // Set text properties
   textAlign(CENTER, CENTER);
   textSize(width * 0.06);
 }
@@ -56,8 +56,24 @@ function setup() {
 function draw() {
   background('#ff93d2');
   
+  // Draw random hearts first (behind main heart)
+  for (let heart of randomHearts) {
+    push();
+    translate(heart.x, heart.y);
+    rotate(heart.rotation);
+    tint(255, heart.opacity);
+    imageMode(CENTER);
+    image(heartImg, 0, 0, heart.size * 1.0769, heart.size);
+    noTint();
+    pop();
+    
+    // Fade in effect for random hearts
+    if (heart.opacity < 255) {
+      heart.opacity += fadeInSpeed;
+    }
+  }
+  
   if (!showHeart) {
-    // Draw prompt text above buttons
     fill(255);
     textSize(width * 0.08);
     textFont(font3);
@@ -68,8 +84,6 @@ function draw() {
     text("with me?", width/2, height/2 - 80);
     textFont('Courier New');
     text("👉👈", width/2, height/2 - 10);
-    
-    
     textSize(width * 0.06);
     textFont(font3);
   }
@@ -85,7 +99,7 @@ function draw() {
     imageMode(CENTER);
     let heartSize = width * 0.4;
     tint(255, heartOpacity);
-    image(heartImg, width/2, height/2- 100, heartSize*1.0769, heartSize);
+    image(heartImg, width/2, height/2 - 100, heartSize * 1.0769, heartSize);
     noTint();
     
     push();
@@ -100,12 +114,30 @@ function draw() {
   }
 }
 
+function mousePressed() {
+  if (showHeart) {
+    if (!firstClickDone) {
+      // First click after showing heart
+      firstClickDone = true;
+    } else {
+      // Second click and beyond
+      let newHeart = {
+        x: random(width * 0.1, width * 0.9),
+        y: random(height * 0.1, height * 0.9),
+        size: random(width * 0.1, width * 0.2),
+        rotation: random(TWO_PI),
+        opacity: 0
+      };
+      randomHearts.push(newHeart);
+    }
+  }
+}
+
 function windowResized() {
   let canvasWidth = min(windowWidth, windowHeight * (9/16));
   let canvasHeight = canvasWidth * (16/9);
   resizeCanvas(canvasWidth, canvasHeight);
   
-  // Recalculate button positions on resize
   yesButtonPosX = windowWidth/2 - 100;
   noButtonPosX = windowWidth/2 + 20;
   buttonPosY = windowHeight/2 + 100;
@@ -114,8 +146,6 @@ function windowResized() {
     yesButton.position(yesButtonPosX, buttonPosY);
     noButton.position(noButtonPosX, buttonPosY);
   }
-  
-  
 }
 
 function showHeartImage() {
